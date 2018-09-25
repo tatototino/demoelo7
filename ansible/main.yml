@@ -1,0 +1,8 @@
+---
+# tasks file for couchbase
+- name: "Hosts"
+  hosts: [couchbase]
+  become: true
+  tasks:
+  - include: couchbase.yml
+    tags: couchbase
