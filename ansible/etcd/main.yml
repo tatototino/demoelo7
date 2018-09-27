@@ -1,0 +1,9 @@
+---
+# tasks file for etcd
+- name: "Hosts"
+  hosts: [etcd]
+  become: true
+  gather_facts: True
+  tasks:
+    - include: etcd.yml
+    - debug: var=hostvars[inventory_hostname]['ansible_ens160']['ipv4']['address']
