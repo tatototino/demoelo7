@@ -1,0 +1,9 @@
+---
+# tasks file for etcd
+- name: "Hosts"
+  hosts: [haproxyconfd]
+  become: true
+  gather_facts: True
+  tasks:
+    - include: haproxyconfd.yml
+    - debug: var=hostvars[inventory_hostname]['ansible_ens160']['ipv4']['address']
