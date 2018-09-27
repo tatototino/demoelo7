@@ -1,0 +1,20 @@
+  - name: Add epel-release repo
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install etcd
+    yum:
+      name: etcd
+      state: present
+
+  - name: etcd config file
+    template:
+      src: etcd.conf
+      dest: /etc/etcd/etcd.conf
+
+  - name: enable etcd
+    command: systemctl enable etcd
+
+  - name: start etcd
+    command: systemctl start etcd
