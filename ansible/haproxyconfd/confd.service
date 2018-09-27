@@ -1,0 +1,10 @@
+[Unit]
+Description=Confd
+After=haproxy.service
+
+[Service]
+ExecStart=/usr/sbin/confd
+Restart=always
+
+[Install]
+WantedBy=basic.target
