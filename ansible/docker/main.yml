@@ -1,0 +1,8 @@
+---
+# tasks file for etcd
+- name: "Hosts"
+  hosts: [docker]
+  become: true
+  gather_facts: True
+  tasks:
+    - include: docker.yml
