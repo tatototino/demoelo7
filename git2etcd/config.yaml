@@ -1,1 +1,25 @@
 
+{
+  "host": {
+    "listen": "",
+    "port": "4242",
+    "hook": "hook"
+  },
+  "repo": {
+    "url": "https://github.com/tatototino/config.git",
+    "branch": "master",
+    "path": "/teste"
+  },
+  "etcd": {
+    "hosts": [
+      "http://127.0.0.1:2379"
+    ]
+  },
+  "auth": {
+    "type": "http",
+    "http": {
+      "username": "tatototino",
+      "password": "********"
+    }
+  }
+}
