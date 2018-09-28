@@ -29,19 +29,34 @@
           with_items:
           - etcd
 
-        - name: peando chave etcd
-          shell: etcdctl --endpoints="http://192.168.15.19:2379" ls /couchbase3 2> /dev/null | head -1 | xargs etcdctl --endpoints="http://192.168.15.19:2379" get
+        - name: start couchbase-server
+          command: systemctl start couchbase-server
+
+        - name: wait couchbase
+          command: sleep 30
+
+        - name: pegando chave etcd
+          shell: etcdctl --endpoints="http://10.172.60.163:2379,http://10.172.60.187:2379,http://10.172.60.188:2379" ls /couchbase 2> /dev/null | head -1 | xargs etcdctl --endpoints="http://10.172.60.163:2379,http://10.172.60.187:2379,http://10.172.60.188:2379" get
           register: output
           ignore_errors: yes
 
-        - name: print output
-          shell: echo "{{ output.stdout }}" /root/{{ output.stdout }} && echo "{{ ansible_enp0s3.ipv4.address }}" > /{{ ansible_enp0s3.ipv4.address }}
-
-        - name: add node
-          shell: echo "add node {{ output.stdout }}" > /root/node-new
-          when: output is succeeded
 
         - name: add nó etcd
-          shell: echo "add node {{ ansible_enp0s3.ipv4.address }}" > /root/node-etcd-new
+          shell: etcdctl --endpoints="http://10.172.60.163:2379,http://10.172.60.187:2379,http://10.172.60.188:2379" mkdir /couchbase && etcdctl --endpoints="http://10.172.60.163:2379,http://10.172.60.187:2379,http://10.172.60.188:2379" set /couchbase/{{ ansible_enp0s3.ipv4.address }} {{ ansible_enp0s3.ipv4.address }}
           when: output is failed
 
+        - name: init cluster
+          shell: /opt/couchbase/bin/couchbase-cli cluster-init -c {{ ansible_enp0s3.ipv4.address }}:8091 --cluster-username Administrator  --cluster-password password --services data,index,query,fts  --cluster-ramsize 256 --cluster-index-ramsize 500
+          when: output is failed
+
+        - name: create database app-db
+          shell: /opt/couchbase/bin/couchbase-cli bucket-create -c {{ ansible_enp0s3.ipv4.address }}:8091 --username Administrator  --password password --bucket app-db --bucket-type couchbase  --bucket-ramsize 200
+          when: output is failed
+
+        - name: get master-node
+          shell:  etcdctl --endpoints="http://10.172.60.163:2379,http://10.172.60.187:2379,http://10.172.60.188:2379" ls couchbase | head -1 | awk -F'/' '{ print $3}'
+          register: output2
+
+        - name: create join cluster
+          shell: /opt/couchbase/bin/couchbase-cli server-add --cluster={{ output2.stdout }}:8091  --user Administrator --password password   --server-add={{ ansible_enp0s3.ipv4.address }}:8091  --server-add-username=Administrator --server-add-password=password
+          when: output is succeeded
