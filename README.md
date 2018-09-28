@@ -26,6 +26,9 @@ Create App Layer
 
 # Step 5
 Build app in a pex file
+Copy app dir from git
+install pex: pip install python-pex
+inside the appdir exec: pex -o my-executable.pex --python-shebang="/usr/bin/env python" -D . requests bottle couchbase datetime puthon-etcd -e app
 
 # Step 6
 Create confd haproxy layer
