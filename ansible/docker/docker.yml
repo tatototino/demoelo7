@@ -1,0 +1,31 @@
+---
+# tasks file for etcd
+- name: "Hosts"
+  hosts: [docker]
+  become: true
+  gather_facts: True
+  tasks:
+    - include: docker.yml
+[root@ansible tasks]# ls
+docker.yml  hosts  main.retry  main.yml
+[root@ansible tasks]# cat
+docker.yml  hosts       main.retry  main.yml
+[root@ansible tasks]# cat docker.yml
+  - name: Add epel-release repo
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install docker
+    yum:
+      name: docker
+      state: present
+
+  - name: enable docker
+    command: systemctl enable docker
+
+  - name: start docker
+    command: systemctl start docker
+
+  - name: start registrator
+    command:  docker run -d --name=registrator --net=host --volume=/var/run/docker.sock:/tmp/docker.sock gliderlabs/registrator:latest etcd://10.172.60.187:2379/services
