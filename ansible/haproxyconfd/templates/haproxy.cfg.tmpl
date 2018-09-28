@@ -40,3 +40,11 @@ backend application-backend
 {{range getvs "/app/*"}}
     server {{.}} {{.}}  check
 {{end}}
+
+
+{{ range gets "/services/app/*" }}
+{{ $data := base .Key }}
+{{ $data2 := split $data ":" }}
+server {{index $data2 1}} {{index $data2 0}}{{ .Value }} check
+{{ end }}
+
