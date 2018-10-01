@@ -1,4 +1,4 @@
 couchbase_username=admin
 couchbase_password=totvs123
-bucket_name=app-cronicle
+bucket_name=cronicle
 
