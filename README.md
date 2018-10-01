@@ -49,5 +49,6 @@ docker build -t app:v3 -f dockerfile  .
 
 
 # Step 8
-docker run -d app:v3
+docker run --name app1 -d  -p 3600:8080 app:v3
+docker run --name app2 -d  -p 3601:8080 app:v3
 
