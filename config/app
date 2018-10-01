@@ -1,1 +1,4 @@
+couchbase_username=Administrator
+couchbase_password=password
+bucket_name=app-teste
 
