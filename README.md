@@ -44,8 +44,10 @@ ansible-playbook -i hosts main.yml
 
 # Step 7
 Create docker image with pex file
+Get the docker file from git and couchbase lib to inject in Centos image
+docker build -t app:v3 -f dockerfile  .
 
 
 # Step 8
-Start docker image
+docker run -d app:v3
 
