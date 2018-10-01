@@ -19,7 +19,8 @@ Create git2lab server
 go get github.com/blippar/git2etcd
 mv ~$GOPATH/bin/git2etcd to /usr/sbin/git2etcd
 copy config file from gitto /etc/git2etcd/config.json
-run /usr/sbin/git2etcd -conf_dir/etc/git2etcd/config.json
+run /usr/sbin/git2etcd -conf_dir/etc/git2etcd
+Create a dir /config/app in the github and create a file to store credentials to connect to database
 
 # Step 4
 Create Docker layer
@@ -42,6 +43,7 @@ ansible-playbook -i hosts main.yml
 
 # Step 7
 Create docker image with pex file
+
 
 # Step 8
 Start docker image
