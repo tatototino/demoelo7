@@ -22,12 +22,12 @@ copy config file from gitto /etc/git2etcd/config.json
 run /usr/sbin/git2etcd -conf_dir/etc/git2etcd
 Create a dir /config/app in the github and create a file to store credentials to connect to database
 
+
 # Step 4
 Create Docker layer
 copy  	docker.yml and main.yml from  git to docker task folder
 create host file with all docker server
 ansible-playbook -i hosts main.yml
-
 
 # Step 5
 Build app in a pex file
