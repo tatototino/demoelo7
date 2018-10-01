@@ -33,7 +33,8 @@ ansible-playbook -i hosts main.yml
 Build app in a pex file
 Copy app dir from git
 install pex: pip install python-pex
-inside the appdir exec: pex -o my-executable.pex --python-shebang="/usr/bin/env python" -D . requests bottle couchbase datetime python-etcd -e app
+inside the appdir exec: pex -o appexec.pex --python-shebang="/usr/bin/env python" -D . requests bottle couchbase datetime python-etcd  -e app
+execute o binnary appexec.pex to see everything is ok
 
 # Step 6
 Create Haproxy/confd layer
