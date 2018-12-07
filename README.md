@@ -1,3 +1,6 @@
+
+![alt text](https://github.com/tatototino/demoelo7/master/)
+
 # Step 1
 Create database etcd layer
 
