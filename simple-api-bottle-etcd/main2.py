@@ -72,7 +72,7 @@ if __name__ == "__main__":
   def index(name):
     conexaodb = conexao_db()
     cb = conexaodb.connect_db()
-    row_iter = cb.n1ql_query(N1QLQuery("SELECT * FROM `cronicle` WHERE name = $docid", docid = name ))
+    row_iter = cb.n1ql_query(N1QLQuery("SELECT name FROM `cronicle` WHERE name = $docid", docid = name ))
     for row in row_iter:
       return(row)
 
@@ -80,7 +80,7 @@ if __name__ == "__main__":
   def index():
     conexaodb = conexao_db()
     cb = conexaodb.connect_db()
-    row_iter = cb.n1ql_query(N1QLQuery("SELECT * FROM `cronicle` WHERE conversationId = $docid", docid = request.query.conversationId ))
+    row_iter = cb.n1ql_query(N1QLQuery("SELECT `conversationId`,`from`,`to`,`text` FROM `cronicle` WHERE conversationId = $docid", docid = request.query.conversationId ))
     for row in row_iter:
       return(row)
 
